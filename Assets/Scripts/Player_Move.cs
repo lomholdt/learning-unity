@@ -28,6 +28,7 @@ public class Player_Move : MonoBehaviour {
 
 		if (Input.GetButtonDown ("Jump")) {
 			Jump ();
+			SoundManager.Instance.PlaySfx ("jump");
 		}
 
 		myAnimator.SetFloat ("speed", Mathf.Abs(moveX));
