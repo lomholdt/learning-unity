@@ -5,44 +5,26 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
 
 	[SerializeField]
-	private AudioSource musicSource;
+	public static AudioSource musicSource;
 
 	[SerializeField]
-	private AudioSource sfxSource;
+	public static AudioSource sfxSource;
 
-
-	[SerializeField]
-	private AudioSource musicSlider;
-
-	[SerializeField]
-	private AudioSource sfxSlider;
-
-	Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
-
-	private static SoundManager _instance;
-
-	public static SoundManager Instance { get { return _instance; } }
+	static Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
 	// Use this for initialization
 	void Start () {
+
+		sfxSource = gameObject.GetComponents<AudioSource> ()[0];
+
 		AudioClip[] clips = Resources.LoadAll<AudioClip> ("Audio") as AudioClip[];
 
 		foreach (AudioClip clip in clips) {
 			audioClips.Add (clip.name, clip);
 		}
 	}
-
-	private void Awake()
-	{
-		if (_instance != null && _instance != this)
-		{
-			Destroy(this.gameObject);
-		} else {
-			_instance = this;
-		}
-	}
-
-	public void PlaySfx(string name)
+		
+	public static void PlaySfx(string name)
 	{
 		sfxSource.PlayOneShot (audioClips [name]);
 	}
