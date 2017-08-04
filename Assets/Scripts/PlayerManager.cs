@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour {
 	private float moveX;
 
 	const string GROUND_TAG = "Ground";
-	const float DOUBLE_JUMP_DELAY = 0.1f;
+	const float DOUBLE_JUMP_DELAY = 0.05f;
 
 	private Animator myAnimator;
 
@@ -68,7 +68,6 @@ public class PlayerManager : MonoBehaviour {
 	 */
 	void Jump(){
 		if (isGrounded) {
-			isJumping = true;
 			isGrounded = false;
 			canDoubleJump = false;
 			JumpHero ();
@@ -92,6 +91,8 @@ public class PlayerManager : MonoBehaviour {
 	 */
 	private void JumpHero()
 	{
+		isJumping = true;
+
 		// Play Jump sound
 		SoundManager.PlaySfx ("jump");
 

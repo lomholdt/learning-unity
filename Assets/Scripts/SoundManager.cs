@@ -15,12 +15,14 @@ public class SoundManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		sfxSource = gameObject.GetComponents<AudioSource> ()[0];
+		sfxSource = gameObject.GetComponents<AudioSource> ()[1];
 
 		AudioClip[] clips = Resources.LoadAll<AudioClip> ("Audio") as AudioClip[];
 
 		foreach (AudioClip clip in clips) {
-			audioClips.Add (clip.name, clip);
+			if (!audioClips.ContainsKey(clip.name)) {
+				audioClips.Add (clip.name, clip);
+			}
 		}
 	}
 		
