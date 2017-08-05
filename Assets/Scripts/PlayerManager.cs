@@ -11,6 +11,10 @@ public class PlayerManager : MonoBehaviour {
 	public bool canDoubleJump;
 	public int playerJumpPower = 1250;
 	private float moveX;
+	private Transform firePosition;
+
+	public GameObject leftBullet;
+	public GameObject rigthBullet;
 
 	const string GROUND_TAG = "Ground";
 	const float DOUBLE_JUMP_DELAY = 0.05f;
@@ -18,7 +22,12 @@ public class PlayerManager : MonoBehaviour {
 	private Animator myAnimator;
 
 	void Start(){
+		// Set the animator component reference
 		myAnimator = GetComponent<Animator> ();
+
+		// Get's the hero/player transform component
+		// and Find the nested firePos gameobjects' transform component
+		firePosition = transform.Find ("firePos");
 	}
 
 	// Update is called once per frame
@@ -36,6 +45,11 @@ public class PlayerManager : MonoBehaviour {
 			Jump ();
 		}
 
+		if (Input.GetButtonDown ("Fire1")) {
+			Debug.Log ("Fire Pressed");
+			Fire ();
+		}
+
 		myAnimator.SetFloat ("speed", Mathf.Abs(moveX));
 
 		// Player direction
@@ -50,6 +64,22 @@ public class PlayerManager : MonoBehaviour {
 				moveX * playerSpeed,
 				gameObject.GetComponent<Rigidbody2D>().velocity.y
 			);
+	}
+
+	void Fire() 
+	{
+		GameObject bullet;
+		if (facingRight) {
+			bullet = rigthBullet;
+		} else {
+			bullet = leftBullet;
+		}
+
+		Instantiate (
+			bullet,
+			firePosition.position,
+			Quaternion.identity
+		);
 	}
 
 	/**
